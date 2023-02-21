@@ -2,7 +2,7 @@ import { useFormik } from "formik"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 
-function LogIn(){
+function LogIn({setToken}){
 
 const navigate = useNavigate()
 const [incorrect,setIncorrect] = useState(false)
@@ -12,7 +12,8 @@ function handleSubmit(username,password){
     .then((response) => response.json())
     .then((user) => {
         if(user.status == true){
-            navigate("/users")
+            setToken(user.token)
+            navigate(`/users/${user.token}`)
             localStorage.setItem('token', user.token)
         }else{
             setIncorrect(true)

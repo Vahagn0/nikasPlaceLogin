@@ -22,7 +22,7 @@ app.use(cors())
 app.get("/:username/:password", async (req,res)=>{
     const {username,password} = req.params
     const user = await User.findOne({username : username})
-    const token = jwt.sign({username, password}, process.env.SECRET)
+    const token = jwt.sign({username, password}, process.env.SECRET )
     if(user && user.password === password){
         res.send({status: true, token: token})
       }else{
