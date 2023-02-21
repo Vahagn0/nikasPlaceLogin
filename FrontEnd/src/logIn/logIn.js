@@ -1,14 +1,24 @@
-import { useField, useFormik } from "formik"
-
-function handleSubmit(username,password){
-    fetch(`http://localhost:3001/${username}/${password}`)
-    .then((response) => response.json())
-    .then((user) => {
-        localStorage.setItem('token', user.token)
-    })
-}
+import { useFormik } from "formik"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 function LogIn(){
+
+const navigate = useNavigate()
+const [incorrect,setIncorrect] = useState(false)
+
+function handleSubmit(username,password){
+    fetch(`http://localhost:8080/${username}/${password}`)
+    .then((response) => response.json())
+    .then((user) => {
+        if(user.status == true){
+            navigate("/users")
+            localStorage.setItem('token', user.token)
+        }else{
+            setIncorrect(true)
+        } 
+    })
+}
 
     const formik = useFormik({
         initialValues: {
@@ -19,12 +29,14 @@ function LogIn(){
 
 
     return(
-        <div className="logIn">
-            <form onSubmit={(e)=>{
+        <div className="loginDIv" >
+            <form className="loginForm"
+                onSubmit={(e)=>{
                 e.preventDefault()
                 handleSubmit(formik.values.username,formik.values.password)
             }}>
                 <input
+                className="loginInput"
                 type="text"
                 placeholder="username" 
                 name="username"
@@ -33,14 +45,18 @@ function LogIn(){
                 value={formik.values.username}
                 />
                 <input
-                type="text"
+                className="loginInput"
+                type="password"
                 placeholder="password" 
                 name="password"
                 required
                 onChange={formik.handleChange}
                 value={formik.values.password}
                 />
-                <button>submit</button>
+                {incorrect &&
+                    <p className="incorrectText">username or password is incorrect</p>
+                }
+                <button className="loginButton">submit</button>
             </form>
         </div>
     )

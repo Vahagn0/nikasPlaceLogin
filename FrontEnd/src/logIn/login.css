@@ -1,0 +1,35 @@
+.loginInput{
+   height: 100px;
+   width: 300px;
+   border-radius: 10px;
+   margin-top: 10px;
+   padding-left: 10px;
+   font-size: 30px;
+}
+
+.loginButton{
+    height: 100px;
+   width: 300px;
+   border-radius: 10px;
+   margin-top: 10px;
+   padding-left: 10px;
+   font-size: 30px;
+   background-color: #2B959D;
+}
+
+.loginDiv{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loginForm{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
