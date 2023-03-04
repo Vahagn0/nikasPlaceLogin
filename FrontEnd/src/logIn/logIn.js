@@ -8,12 +8,22 @@ const navigate = useNavigate()
 const [incorrect,setIncorrect] = useState(false)
 
 function handleSubmit(username,password){
-    fetch(`http://localhost:8080/${username}/${password}`)
+    fetch("http://localhost:8080/",
+    {
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        method: "POST",
+        body: JSON.stringify({
+            username: username,
+            password: password
+        })
+    })
     .then((response) => response.json())
     .then((user) => {
         if(user.status == true){
             setToken(user.token)
-            navigate(`/users/${user.token}`)
+            navigate(`/users`)
             localStorage.setItem('token', user.token)
         }else{
             setIncorrect(true)
